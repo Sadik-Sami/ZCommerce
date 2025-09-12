@@ -1,24 +1,32 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --import=tsx --env-file=.env --watch src/index.ts",
-    "build": "tsc"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.15.1",
-  "dependencies": {
-    "express": "^5.1.0"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.3",
-    "tsx": "^4.20.5",
-    "typescript": "^5.9.2"
-  }
+	"name": "server",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "node --import=tsx --env-file=.env --watch src/index.ts",
+		"build": "tsc",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate",
+		"db:studio": "drizzle-kit studio"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.15.1",
+	"dependencies": {
+		"dotenv": "^17.2.2",
+		"drizzle-orm": "^0.44.5",
+		"express": "^5.1.0",
+		"pg": "^8.16.3"
+	},
+	"devDependencies": {
+		"@types/express": "^5.0.3",
+		"@types/pg": "^8.15.5",
+		"drizzle-kit": "^0.31.4",
+		"tsx": "^4.20.5",
+		"typescript": "^5.9.2"
+	}
 }
