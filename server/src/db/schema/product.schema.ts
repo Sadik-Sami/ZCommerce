@@ -1,3 +1,4 @@
+import { InferModel } from 'drizzle-orm';
 import { doublePrecision, integer, pgTable, text, varchar } from 'drizzle-orm/pg-core';
 
 export const productsTable = pgTable('products', {
@@ -7,3 +8,6 @@ export const productsTable = pgTable('products', {
 	image: varchar({ length: 255 }),
 	price: doublePrecision().notNull(),
 });
+
+export type Product = typeof productsTable.$inferSelect;
+export type NewProduct = typeof productsTable.$inferInsert;

@@ -1,5 +1,6 @@
 import express, { json, urlencoded } from 'express';
-import productRoutes from './routes/products/index';
+import productRoutes from './routes/products/product.routes';
+import { errorHandler } from './middleware/errorHandler';
 const port = 3000;
 const app = express();
 
@@ -11,6 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/products', productRoutes);
+app.use(errorHandler);
 
 app.listen(port, () => {
 	console.log(`Zcommerce is listening on port ${port}`);
