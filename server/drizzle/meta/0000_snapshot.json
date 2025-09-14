@@ -1,5 +1,5 @@
 {
-  "id": "e0bf1bde-3522-48f9-b7f3-15bbb4e9824c",
+  "id": "c1960042-7103-43ec-bf74-ae2dbad4a55f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,20 +10,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "products_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
