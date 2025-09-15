@@ -1,5 +1,5 @@
 import { db } from '../../config/db';
-import { NewProduct, Product, productsTable } from '../../db/schema/products.schema';
+import { NewProduct, Product, productsTable } from '../../db/schema/product.schema';
 import { eq } from 'drizzle-orm';
 
 export const productServices = {

@@ -10,6 +10,7 @@
 		"build": "tsc",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
+		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio"
 	},
 	"keywords": [],
@@ -17,6 +18,7 @@
 	"license": "ISC",
 	"packageManager": "pnpm@10.15.1",
 	"dependencies": {
+		"bcrypt": "^6.0.0",
 		"dotenv": "^17.2.2",
 		"drizzle-orm": "^0.44.5",
 		"drizzle-zod": "^0.8.3",
