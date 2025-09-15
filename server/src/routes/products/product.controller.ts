@@ -5,7 +5,7 @@ export const productController = {
 	async list(req: Request, res: Response, next: NextFunction) {
 		try {
 			const products = await productServices.getAll();
-			res.json(products);
+			res.status(200).json({ success: true, products });
 		} catch (error) {
 			next(error);
 		}
@@ -13,9 +13,11 @@ export const productController = {
 	async getById(req: Request, res: Response, next: NextFunction) {
 		try {
 			const id: string = req.params.id;
+
 			const product = await productServices.getById(id);
 			if (!product) return res.status(404).json({ message: 'Product not found' });
-			res.json(product);
+
+			res.status(200).json({ success: true, product });
 		} catch (error) {
 			next(error);
 		}
@@ -23,7 +25,7 @@ export const productController = {
 	async create(req: Request, res: Response, next: NextFunction) {
 		try {
 			const product = await productServices.create(req.body);
-			res.status(201).json({ message: 'Product created', product });
+			res.status(201).json({ success: true, message: 'Product created', product });
 		} catch (err) {
 			next(err);
 		}
@@ -31,8 +33,12 @@ export const productController = {
 	async update(req: Request, res: Response, next: NextFunction) {
 		try {
 			const id: string = req.params.id;
+
+			const existing = await productServices.getById(id);
+			if (!existing) return res.status(404).json({ success: false, message: 'Product not found' });
+
 			const product = await productServices.update(id, req.body);
-			res.json({ message: 'Product updated', product });
+			res.status(201).json({ success: true, message: `${product?.name} updated successfully` });
 		} catch (err) {
 			next(err);
 		}
@@ -40,11 +46,12 @@ export const productController = {
 	async remove(req: Request, res: Response, next: NextFunction) {
 		try {
 			const id: string = req.params.id;
-			console.log(id);
-			const found = await productServices.getById(id);
-			console.log(found)
+
+			const existing = await productServices.getById(id);
+			if (!existing) return res.status(404).json({ success: false, message: 'Product not found' });
+
 			const product = await productServices.delete(id);
-			res.json({ message: 'Product deleted', product });
+			res.status(204).json({ success: true, message: `${product?.name || 'Product'} deleted successfully` });
 		} catch (err) {
 			next(err);
 		}
