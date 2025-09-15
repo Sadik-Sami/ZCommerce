@@ -38,7 +38,7 @@ export const productController = {
 			if (!existing) return res.status(404).json({ success: false, message: 'Product not found' });
 
 			const product = await productServices.update(id, req.body);
-			res.status(201).json({ success: true, message: `${product?.name} updated successfully` });
+			res.status(201).json({ success: true, message: `${product?.name} updated successfully`, product });
 		} catch (err) {
 			next(err);
 		}
