@@ -7,9 +7,10 @@ export const sessionsTable = pgTable('sessions', {
 	user_id: uuid('user_id')
 		.notNull()
 		.references(() => usersTable.id, { onDelete: 'cascade' }),
-	token: text('token').notNull(),
-	user_agent: text('user_agent').default(''),
-	ip: varchar('ip', { length: 50 }).default(''),
+	access_token: text('access_token'),
+	refresh_token: text('refresh_token'),
+	user_agent: text('user_agent'),
+	ip: varchar('ip', { length: 50 }),
 	expires_at: timestamp('expires_at', { withTimezone: true }).notNull(),
 	created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 	updated_at: timestamp('updated_at', { withTimezone: true })

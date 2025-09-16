@@ -1,5 +1,5 @@
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { productsTable } from './products.schema';
+import { productsTable } from '../schema/product.schema';
 import { z } from 'zod';
 
 export const productInsertSchema = createInsertSchema(productsTable, {

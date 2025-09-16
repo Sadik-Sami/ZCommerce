@@ -1,5 +1,6 @@
 import express, { json, urlencoded } from 'express';
 import productRoutes from './routes/products/product.routes';
+import authRoutes from './routes/auth/auth.routes';
 import { errorHandler } from './middleware/errorHandler';
 const port = 3000;
 const app = express();
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes);
 app.use(errorHandler);
 
 app.listen(port, () => {
