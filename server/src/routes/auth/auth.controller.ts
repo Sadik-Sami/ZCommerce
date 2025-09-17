@@ -6,6 +6,7 @@ import { NewUser } from '../../db/schema/user.schema';
 import { LoginRequest } from '../../db/validator/auth.validation';
 import { authService } from './auth.service';
 import { refreshCookieOptions } from '../../utils/token';
+import { AppError } from '../../middleware/errorHandler';
 
 export const authController = {
 	async signup(req: Request, res: Response, next: NextFunction) {
@@ -39,7 +40,6 @@ export const authController = {
 			next(error);
 		}
 	},
-
 	async login(req: Request, res: Response, next: NextFunction) {
 		try {
 			const data: LoginRequest = req.body;
@@ -58,6 +58,25 @@ export const authController = {
 			const publicUser = publicUserSelectSchema.parse(user);
 
 			return res.json({ success: true, message: 'Logged in', user: publicUser, accessToken, sessionId: session.id });
+		} catch (err) {
+			next(err);
+		}
+	},
+	async refresh(req: Request, res: Response, next: NextFunction) {
+		try {
+			const refresh = req.cookies?.refresh_token;
+			const sessionId = req.cookies?.sessionId;
+			if (!refresh || !sessionId) throw new AppError('No refresh token', 401);
+
+			const { accessToken, refreshToken, user } = await authService.refresh(sessionId, refresh);
+
+			// rotating cookies
+			const cookieOpts = refreshCookieOptions();
+			res.cookie('refresh_token', refreshToken, cookieOpts);
+			res.cookie('sessionId', sessionId, { ...cookieOpts, httpOnly: true });
+
+			const publicUser = publicUserSelectSchema.parse(user);
+			return res.json({ success: true, accessToken, user: publicUser });
 		} catch (err) {
 			next(err);
 		}
