@@ -1,5 +1,6 @@
 import jwt, { Secret, SignOptions } from 'jsonwebtoken';
 import crypto from 'crypto';
+import { JwtPayload } from '../types/auth';
 
 export const ACCESS_TOKEN_EXPIRES_IN = process.env.ACCESS_TOKEN_EXPIRES_IN ?? '15m';
 export const REFRESH_TOKEN_DAYS = Number(process.env.REFRESH_TOKEN_DAYS ?? '30');
@@ -13,9 +14,9 @@ export function signAccessToken(payload: object) {
 	);
 }
 
-export function verifyAccessToken(token: string) {
+export function verifyAccessToken(token: string): JwtPayload {
 	if (!process.env.JWT_ACCESS_SECRET) throw new Error('Missing JWT_ACCESS_SECRET');
-	return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+	return jwt.verify(token, process.env.JWT_ACCESS_SECRET) as JwtPayload;
 }
 
 export function generateRefreshToken() {
